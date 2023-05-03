@@ -22,9 +22,9 @@ export default async function Home() {
     <main className="container mx-auto mt-6">
       <h1 className="text-center text-3xl font-bold">Now Playing</h1>
       <p className="text-center text-xl font-light mt-4">
-        {data.movies.dates.minimum} - {data.movies.dates.maximum}
+        {data.dates.minimum} - {data.dates.maximum}
       </p>
-      {data.movies.results.map((movie) => (
+      {data.results.map((movie) => (
         <Link href={`/movies/${movie.id}`} key={movie.id} className="block">
           {movie.title}
         </Link>
