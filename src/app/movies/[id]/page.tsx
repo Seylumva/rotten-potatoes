@@ -5,7 +5,7 @@ async function getDetails(id) {
     "https://" + process.env.VERCEL_URL + "/api/movies/details?id=" + id
   );
   if (!res.ok) {
-    console.log("Unable to fetch movies now playing");
+    throw new Error("Faled to fetch data");
   }
 
   return res.json();

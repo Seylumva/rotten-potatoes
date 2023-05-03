@@ -10,9 +10,8 @@ async function getMovies() {
     "https://" + process.env.VERCEL_URL + "/api/movies/now-playing"
   );
   if (!res.ok) {
-    console.log("Unable to fetch movies now playing");
+    throw new Error("Faled to fetch data");
   }
-  // const data = await res.json()
 
   return res.json();
 }
