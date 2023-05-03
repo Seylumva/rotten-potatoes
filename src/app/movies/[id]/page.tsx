@@ -1,7 +1,9 @@
 import Image from "next/image";
 
 async function getDetails(id) {
-  const res = await fetch("/api/movies/details?id=" + id);
+  const res = await fetch(
+    process.env.VERCEL_URL + "/api/movies/details?id=" + id
+  );
   if (!res.ok) {
     console.log("Unable to fetch movies now playing");
   }

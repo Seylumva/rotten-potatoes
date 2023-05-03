@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 async function getMovies() {
-  const res = await fetch("/api/movies/now-playing");
+  const res = await fetch(process.env.VERCEL_URL + "/api/movies/now-playing");
   if (!res.ok) {
     console.log("Unable to fetch movies now playing");
   }
