@@ -7,10 +7,10 @@ export const metadata = {
 
 async function getMovies() {
   const res = await fetch(
-    "https://" + process.env.VERCEL_URL + "/api/movies/now-playing"
+    "http://" + process.env.VERCEL_URL + "/api/movies/now-playing"
   );
   if (!res.ok) {
-    throw new Error("Faled to fetch data");
+    throw new Error("Failed to fetch data");
   }
 
   return res.json();

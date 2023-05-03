@@ -2,10 +2,10 @@ import Image from "next/image";
 
 async function getDetails(id) {
   const res = await fetch(
-    "https://" + process.env.VERCEL_URL + "/api/movies/details?id=" + id
+    "http://" + process.env.VERCEL_URL + "/api/movies/details?id=" + id
   );
   if (!res.ok) {
-    throw new Error("Faled to fetch data");
+    throw new Error("Failed to fetch data");
   }
 
   return res.json();
