@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 async function getDetails(id) {
-  const res = await fetch("http://localhost:3000/api/movies/details?id=" + id);
+  const res = await fetch("/api/movies/details?id=" + id);
   if (!res.ok) {
     console.log("Unable to fetch movies now playing");
   }
