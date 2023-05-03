@@ -1,8 +1,10 @@
 import Image from "next/image";
 
+const baseURL = "https://api.themoviedb.org/3";
+
 async function getDetails(id) {
   const res = await fetch(
-    "http://" + process.env.VERCEL_URL + "/api/movies/details?id=" + id
+    baseURL + `/movie/${id}}?api_key=` + process.env.TMDB_API_KEY
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");

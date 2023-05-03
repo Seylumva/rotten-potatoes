@@ -1,18 +1,18 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
   title: "Rotten Potatoes | Home",
 };
 
+const baseURL = "https://api.themoviedb.org/3";
+
 async function getMovies() {
   const res = await fetch(
-    "http://" + process.env.VERCEL_URL + "/api/movies/now-playing"
+    baseURL + "/movie/now_playing?api_key=" + process.env.TMDB_API_KEY
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-
   return res.json();
 }
 
