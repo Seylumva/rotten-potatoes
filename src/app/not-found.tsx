@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const NotFound = () => {
+export default function NotFound() {
   return (
     <main className="container mx-auto">
       <h2 className="text-3xl">404 Looks like you're lost</h2>
@@ -13,6 +13,4 @@ const NotFound = () => {
       </p>
     </main>
   );
-};
-
-export default NotFound;
+}

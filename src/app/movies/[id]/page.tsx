@@ -1,20 +1,13 @@
+import { getDetails } from "@/app/lib/tmdb-api";
+import { generateImageURL } from "@/app/util/tmdb-helpers";
 import Image from "next/image";
-
-const baseURL = "https://api.themoviedb.org/3";
-
-async function getDetails(id) {
-  const res = await fetch(
-    baseURL + `/movie/${id}}?api_key=` + process.env.TMDB_API_KEY
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
   const data = await getDetails(params.id);
+  if (!data) {
+    notFound();
+  }
   return {
     title: `Rotten Potatoes | ${data.title}`,
   };
@@ -22,17 +15,18 @@ export async function generateMetadata({ params }) {
 
 export default async function MovieDetails({ params }) {
   const data = await getDetails(params.id);
-  const genres = data.genres
-    .map((genre) => {
-      return genre.name;
-    })
-    .join(", ");
+
+  if (!data) {
+    notFound();
+  }
+
   return (
     <main className="container mx-auto mt-5">
       <div className="flex gap-5 flex-col md:flex-row">
         <Image
           className="rounded-lg shadow-md shadow-black self-center md:self-stretch"
-          src={`https://image.tmdb.org/t/p/original/${data.poster_path}`}
+          priority={true}
+          src={generateImageURL(data.poster_path)}
           alt={`${data.title} Poster`}
           width={250}
           height={375}
@@ -41,12 +35,16 @@ export default async function MovieDetails({ params }) {
           {/* Basic Info */}
           <div>
             <h1 className="text-2xl text-center font-bold">{data.title}</h1>
-            <p className="text-sm text-center font-light">{genres}</p>
+            <p className="text-sm text-center font-light">
+              {data.formattedGenres}
+            </p>
           </div>
           {/* Scores */}
           <div className="flex justify-evenly mt-5">
             <div className="flex flex-col gap-1 text-center">
-              <span className="text-2xl font-black">{data.vote_average}</span>
+              <span className="text-2xl font-black">
+                {data.vote_average.toFixed(1)}
+              </span>
               <span className="text-sm uppercase font-black">Potatometer</span>
             </div>
             <div className="flex flex-col gap-1 text-center">
@@ -65,10 +63,11 @@ export default async function MovieDetails({ params }) {
                 >
                   <Image
                     className=""
+                    priority={true}
                     src={`https://image.tmdb.org/t/p/original/${studio.logo_path}`}
                     alt={studio.name}
                     width={64}
-                    height={20}
+                    height={64}
                   />
                   <span className="text-xs text-center font-light">
                     {studio.name}

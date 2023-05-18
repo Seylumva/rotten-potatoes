@@ -1,28 +1,17 @@
 import Link from "next/link";
+import { getMovies } from "./lib/tmdb-api";
 
 export const metadata = {
   title: "Rotten Potatoes | Home",
 };
 
-const baseURL = "https://api.themoviedb.org/3";
-
-async function getMovies() {
-  const res = await fetch(
-    baseURL + "/movie/now_playing?api_key=" + process.env.TMDB_API_KEY
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  return res.json();
-}
-
 export default async function Home() {
   const data = await getMovies();
   return (
-    <main className="container mx-auto mt-6">
+    <main className="container mx-auto mt-8">
       <h1 className="text-center text-3xl font-bold">Now Playing</h1>
-      <p className="text-center text-xl font-light mt-4">
-        {data.dates.minimum} - {data.dates.maximum}
+      <p className="text-center text-md font-light mt-1 mb-4">
+        {data.runningDates}
       </p>
       {data.results.map((movie) => (
         <Link href={`/movies/${movie.id}`} key={movie.id} className="block">
